@@ -365,14 +365,14 @@
             document.body.removeChild(link);
         }
 
-        function enviarComando(valor) {
+function enviarComando(valor) {
             const writeAPIKey = "EBB94WPYJTBH4II6"; 
-            const url = `https://api.thingspeak.com/update?api_key=${writeAPIKey}&field2=${valor}`;
+            const url = `https://api.thingspeak.com/update?api_key=${writeAPIKey}&field2=${valor}&status=update`;
             
             fetch(url)
               .then(response => {
                 if(response.ok) {
-                    const mensaje = valor === 1 ? "¡Comando enviado! Forzando LED Rojo en la maqueta..." : "¡Comando enviado! Volviendo a modo automático...";
+                    const mensaje = valor === 1 ? "¡Alerta forzada activada!" : "¡Modo automático restablecido!";
                     alert(mensaje);
                     
                     const badge = document.getElementById('badgeState');
@@ -380,22 +380,17 @@
                     if (valor === 1) {
                         badge.className = "px-2.5 py-1 rounded-full text-xs font-bold bg-rose-500/20 text-rose-400 border border-rose-500/30";
                         badge.innerText = "ALERTA FORZADA";
-                        rec.innerText = "⚠️ Comando enviado a la nube. El LED Rojo físico se encenderá en el próximo ciclo de lectura.";
+                        rec.innerText = "⚠️ Comando enviado. El LED Rojo físico se encenderá en breve.";
                     } else {
                         badge.className = "px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30";
                         badge.innerText = "SILENCIO";
                         rec.innerText = "Modo automático restablecido. Monitoreando valores del sensor en tiempo real.";
                     }
-                } else {
-                    alert("Hubo un error al comunicarse con ThingSpeak.");
                 }
               })
-              .catch(error => {
-                  console.error('Error al enviar comando:', error);
-                  alert("Error de red al intentar enviar el comando.");
-              });
+              .catch(error => console.error('Error al enviar comando:', error));
         }
-
+        
         window.onload = () => {
             initCharts();
             fetchData();
