@@ -365,20 +365,9 @@
             document.body.removeChild(link);
         }
 
-let comandoContador = 1;
-
-        function enviarComando(valor) {
+function enviarComando(valor) {
             const writeAPIKey = "EBB94WPYJTBH4II6"; 
-        
-            if (valor === 1) {
-                comandoContador = (comandoContador % 2 === 0) ? comandoContador + 1 : comandoContador;
-                if (comandoContador >= 99) comandoContador = 1;
-            } else {
-                comandoContador = (comandoContador % 2 !== 0) ? comandoContador + 1 : comandoContador + 2;
-                if (comandoContador >= 100) comandoContador = 2;
-            }
-
-            const url = `https://api.thingspeak.com/update?api_key=${writeAPIKey}&field2=${comandoContador}`;
+            const url = `https://api.thingspeak.com/update?api_key=${writeAPIKey}&field2=${valor}&t=${new Date().getTime()}`;
             
             fetch(url)
               .then(response => {
