@@ -4,17 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de Control - Semáforo de Ruido</title>
-    <!-- Tailwind CSS para diseño moderno -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Chart.js para los gráficos -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- FontAwesome para iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" href="https://api.iconify.design/fluent-emoji-flat:traffic-light.svg">
 </head>
 <body class="bg-slate-900 text-slate-100 font-sans min-h-screen">
 
-    <!-- Navbar -->
+    
     <header class="bg-slate-800 border-b border-slate-700 shadow-lg sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
             <div class="flex items-center gap-3">
@@ -38,12 +35,10 @@
         </div>
     </header>
 
-    <!-- Main Content -->
+    
     <main class="max-w-7xl mx-auto px-4 py-6 space-y-6">
-
-        <!-- Top Overview Cards -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <!-- Nivel Actual -->
+           
             <div class="bg-slate-800 border border-slate-700 rounded-2xl p-5 shadow-xl relative overflow-hidden flex flex-col justify-between">
                 <div>
                     <div class="flex justify-between items-start">
@@ -61,7 +56,7 @@
                 </div>
             </div>
 
-            <!-- Recomendación de Estudio -->
+            
             <div class="bg-slate-800 border border-slate-700 rounded-2xl p-5 shadow-xl flex flex-col justify-between">
                 <div>
                     <div class="flex justify-between items-start">
@@ -75,7 +70,7 @@
                 </div>
             </div>
 
-            <!-- Estadísticas Rápidas -->
+           
             <div class="bg-slate-800 border border-slate-700 rounded-2xl p-5 shadow-xl flex flex-col justify-between">
                 <div>
                     <div class="flex justify-between items-start">
@@ -99,9 +94,9 @@
             </div>
         </div>
 
-        <!-- Charts Section -->
+        
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <!-- Gráfico Principal Temporal -->
+           
             <div class="bg-slate-800 border border-slate-700 rounded-2xl p-5 shadow-xl lg:col-span-2 flex flex-col">
                 <div class="flex justify-between items-center mb-4">
                     <h2 class="text-sm font-bold uppercase tracking-wider text-slate-300"><i class="fa-solid fa-wave-square mr-2 text-emerald-400"></i>Evolución del Ruido en Tiempo Real</h2>
@@ -112,7 +107,7 @@
                 </div>
             </div>
 
-            <!-- Gráfico Secundario / Horarios recomendados -->
+        
             <div class="bg-slate-800 border border-slate-700 rounded-2xl p-5 shadow-xl flex flex-col">
                 <div class="flex justify-between items-center mb-4">
                     <h2 class="text-sm font-bold uppercase tracking-wider text-slate-300"><i class="fa-solid fa-clock mr-2 text-sky-400"></i>Calidad por Franja</h2>
@@ -123,7 +118,7 @@
             </div>
         </div>
 
-        <!-- Data Table & History -->
+
         <div class="bg-slate-800 border border-slate-700 rounded-2xl p-5 shadow-xl">
             <div class="flex flex-col sm:flex-row justify-between items-center mb-4 gap-3">
                 <h2 class="text-sm font-bold uppercase tracking-wider text-slate-300"><i class="fa-solid fa-table-list mr-2 text-amber-400"></i>Historial de Mediciones Recientes</h2>
@@ -152,20 +147,17 @@
 
     </main>
 
-    <!-- Footer -->
     <footer class="text-center py-6 text-xs text-slate-500 border-t border-slate-800 mt-10">
-        Panel de Control IoT • Desarrollado para gestión de espacios de estudio con NodeMCU y ThingSpeak
+        Panel de Control IoT • Trabajo final de Práctica Prosionalizante
     </footer>
 
-    <!-- Script de lógica de la aplicación -->
     <script>
-        // Configuración de ThingSpeak (Usando tu Channel ID público o configurado)
-        const CHANNEL_ID = '2893899'; // Reemplazá con tu número de canal si es necesario, por defecto usa lector público estándar
+        const CHANNEL_ID = '3525715'; 
         let isDemoMode = false;
         let noiseChart, slotsChart;
         let historicalData = [];
 
-        // Inicializar gráficos
+        
         function initCharts() {
             const ctx1 = document.getElementById('noiseChart').getContext('2d');
             noiseChart = new Chart(ctx1, {
@@ -218,12 +210,10 @@
             });
         }
 
-        // Obtener datos reales de ThingSpeak
         async function fetchData() {
             if (isDemoMode) return;
 
             try {
-                // Consulta a la API pública de ThingSpeak para traer los últimos 20 registros del field1
                 const response = await fetch(`https://api.thingspeak.com/channels/${CHANNEL_ID}/feeds.json?results=20`);
                 const data = await response.json();
                 
@@ -286,7 +276,6 @@
                 ` + tableHTML;
             });
 
-            // Actualizar interfaz con el último valor
             if (values.length > 0) {
                 const lastVal = values[values.length - 1];
                 document.getElementById('currentVal').innerText = lastVal;
@@ -298,7 +287,6 @@
 
             document.getElementById('dataTableBody').innerHTML = tableHTML;
 
-            // Actualizar gráfico de líneas
             noiseChart.data.labels = labels;
             noiseChart.data.datasets[0].data = values;
             noiseChart.update();
@@ -323,7 +311,6 @@
             }
         }
 
-        // Modo Demo para pruebas locales sin internet o placa activa
         function toggleDemoMode() {
             isDemoMode = !isDemoMode;
             const statusSpan = document.getElementById('demoStatus');
@@ -345,7 +332,6 @@
             const simulatedVal = Math.floor(Math.random() * 40);
             const now = new Date().toISOString();
             
-            // Simular un feed
             processFeeds([{
                 created_at: now,
                 field1: simulatedVal
@@ -354,7 +340,6 @@
             setTimeout(runDemoSimulation, 5000);
         }
 
-        // Exportar a CSV para los profesores
         function exportToCSV() {
             let csvContent = "data:text/csv;charset=utf-8,Fecha,NivelRuido,Estado\n";
             historicalData.forEach(row => {
@@ -369,11 +354,9 @@
             document.body.removeChild(link);
         }
 
-        // Iniciar al cargar la página
         window.onload = () => {
             initCharts();
             fetchData();
-            // Refrescar cada 15 segundos igual que el intervalo del NodeMCU
             setInterval(fetchData, 15000);
         };
     </script>
