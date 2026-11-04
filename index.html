@@ -67,7 +67,6 @@
                 </div>
             </div>
 
-           
             <div class="bg-slate-800 border border-slate-700 rounded-2xl p-5 shadow-xl flex flex-col justify-between">
                 <div>
                     <div class="flex justify-between items-start">
@@ -91,6 +90,7 @@
             </div>
         </div>
 
+        <!-- Panel de Control Manual del Actuador -->
         <div class="bg-slate-800 border border-slate-700 rounded-2xl p-5 shadow-xl flex flex-col sm:flex-row justify-between items-center gap-4">
             <div class="flex items-center gap-3">
                 <div class="bg-amber-500/10 text-amber-400 p-2.5 rounded-xl border border-amber-500/20">
@@ -112,7 +112,6 @@
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-           
             <div class="bg-slate-800 border border-slate-700 rounded-2xl p-5 shadow-xl lg:col-span-2 flex flex-col">
                 <div class="flex justify-between items-center mb-4">
                     <h2 class="text-sm font-bold uppercase tracking-wider text-slate-300"><i class="fa-solid fa-wave-square mr-2 text-emerald-400"></i>Evolución del Ruido en Tiempo Real</h2>
@@ -158,7 +157,6 @@
                 </table>
             </div>
         </div>
-
     </main>
 
     <footer class="text-center py-6 text-xs text-slate-500 border-t border-slate-800 mt-10">
@@ -382,7 +380,7 @@
                     if (valor === 1) {
                         badge.className = "px-2.5 py-1 rounded-full text-xs font-bold bg-rose-500/20 text-rose-400 border border-rose-500/30";
                         badge.innerText = "ALERTA FORZADA";
-                        rec.innerText = "⚠️ Comando manual enviado a la nube. El actuador físico (LED Rojo) se encenderá en unos segundos.";
+                        rec.innerText = "⚠️ Comando enviado a la nube. El LED Rojo físico se encenderá en el próximo ciclo de lectura.";
                     } else {
                         badge.className = "px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30";
                         badge.innerText = "SILENCIO";
