@@ -11,7 +11,6 @@
 </head>
 <body class="bg-slate-900 text-slate-100 font-sans min-h-screen">
 
-    
     <header class="bg-slate-800 border-b border-slate-700 shadow-lg sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
             <div class="flex items-center gap-3">
@@ -35,7 +34,6 @@
         </div>
     </header>
 
-    
     <main class="max-w-7xl mx-auto px-4 py-6 space-y-6">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
            
@@ -56,7 +54,6 @@
                 </div>
             </div>
 
-            
             <div class="bg-slate-800 border border-slate-700 rounded-2xl p-5 shadow-xl flex flex-col justify-between">
                 <div>
                     <div class="flex justify-between items-start">
@@ -94,7 +91,27 @@
             </div>
         </div>
 
-        
+        <!-- Sección de Control Manual del Actuador -->
+        <div class="bg-slate-800 border border-slate-700 rounded-2xl p-5 shadow-xl flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <div class="bg-amber-500/10 text-amber-400 p-2.5 rounded-xl border border-amber-500/20">
+                    <i class="fa-solid fa-sliders text-xl"></i>
+                </div>
+                <div>
+                    <h2 class="text-sm font-bold uppercase tracking-wider text-slate-300">Control Manual del Actuador Físico</h2>
+                    <p class="text-xs text-slate-400">Envía comandos directos al canal (Field 2) para forzar estados en la maqueta.</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-3 w-full sm:w-auto">
+                <button onclick="enviarComando(1)" class="flex-1 sm:flex-none px-4 py-2 rounded-xl text-xs font-semibold bg-rose-600/80 hover:bg-rose-600 text-white transition flex items-center justify-center gap-2 shadow-lg shadow-rose-900/20 border border-rose-500/30">
+                    <i class="fa-solid fa-triangle-exclamation"></i> Forzar Alerta
+                </button>
+                <button onclick="enviarComando(0)" class="flex-1 sm:flex-none px-4 py-2 rounded-xl text-xs font-semibold bg-slate-700 hover:bg-slate-600 text-slate-200 transition flex items-center justify-center gap-2 border border-slate-600">
+                    <i class="fa-solid fa-rotate-left"></i> Automático
+                </button>
+            </div>
+        </div>
+
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
            
             <div class="bg-slate-800 border border-slate-700 rounded-2xl p-5 shadow-xl lg:col-span-2 flex flex-col">
@@ -107,7 +124,6 @@
                 </div>
             </div>
 
-        
             <div class="bg-slate-800 border border-slate-700 rounded-2xl p-5 shadow-xl flex flex-col">
                 <div class="flex justify-between items-center mb-4">
                     <h2 class="text-sm font-bold uppercase tracking-wider text-slate-300"><i class="fa-solid fa-clock mr-2 text-sky-400"></i>Calidad por Franja</h2>
@@ -117,7 +133,6 @@
                 </div>
             </div>
         </div>
-
 
         <div class="bg-slate-800 border border-slate-700 rounded-2xl p-5 shadow-xl">
             <div class="flex flex-col sm:flex-row justify-between items-center mb-4 gap-3">
@@ -148,7 +163,7 @@
     </main>
 
     <footer class="text-center py-6 text-xs text-slate-500 border-t border-slate-800 mt-10">
-        Panel de Control IoT • Trabajo final de Práctica Prosionalizante
+        Panel de Control IoT • Trabajo final de Práctica Profesionalizante
     </footer>
 
     <script>
@@ -157,7 +172,6 @@
         let noiseChart, slotsChart;
         let historicalData = [];
 
-        
         function initCharts() {
             const ctx1 = document.getElementById('noiseChart').getContext('2d');
             noiseChart = new Chart(ctx1, {
@@ -352,6 +366,20 @@
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
+        }
+
+        function enviarComando(valor) {
+            const writeAPIKey = "EBB94WPYJTBH4II6"; 
+            const url = `https://api.thingspeak.com/update?api_key=${writeAPIKey}&field2=${valor}`;
+            
+            fetch(url, { method: 'POST' })
+              .then(response => {
+                if(response.ok) {
+                    const mensaje = valor === 1 ? "¡Alerta forzada enviada al actuador físico!" : "¡Modo automático restablecido!";
+                    alert(mensaje);
+                }
+              })
+              .catch(error => console.error('Error al enviar comando:', error));
         }
 
         window.onload = () => {
