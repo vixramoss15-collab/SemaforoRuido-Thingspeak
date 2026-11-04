@@ -1,0 +1,18 @@
+PROYECTO: Semáforo de Ruido IoT - Práctica Profesionalizante
+ALUMNAS: 
+
+Pérez, Marisol Marianela.
+Ramos Miranda, Victoria Agostina.
+Romero Gauna, Mercedes Aymara.
+
+=====================================================
+
+
+1. ENLACE AL CANAL DE THINGSPEAK (Monitoreo en vivo):
+   https://thingspeak.mathworks.com/channels/3525715
+
+
+2. DESCRIPCIÓN DE LOS CAMPOS (Fields):
+   - Field 1: Registro histórico del nivel de ruido acústico (Sensor de sonido).
+   - Field 2: Canal de control bidireccional (Comandos desde la web hacia el NodeMCU/ESP8266).
+
