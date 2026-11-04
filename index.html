@@ -367,8 +367,7 @@
 
         function enviarComando(tipo) {
             const writeAPIKey = "EBB94WPYJTBH4II6"; 
-            const valorUnico = (tipo === 1) ? (1000 + Math.floor(Math.random() * 900)) : (1 + Math.floor(Math.random() * 90));
-            const url = `https://api.thingspeak.com/update?api_key=${writeAPIKey}&field2=${valorUnico}`;
+            const url = `https://api.thingspeak.com/update?api_key=${writeAPIKey}&field2=${tipo}&m=${new Date().getTime()}`;
             
             fetch(url)
               .then(response => {
